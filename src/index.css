@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@layer base {
+  /* Light mode autofill */
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px white inset;
+    -webkit-text-fill-color: black;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Dark mode autofill using system preference */
+  @media (prefers-color-scheme: dark) {
+    input:-webkit-autofill {
+      box-shadow: 0 0 0 1000px #0f172a inset; /* Tailwind's bg-slate-900 */
+      -webkit-text-fill-color: #f9fafb;       /* Tailwind's text-gray-50 */
+    }
+  }
+}
