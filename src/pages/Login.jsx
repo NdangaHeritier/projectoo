@@ -28,9 +28,9 @@ export default function Login() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white dark:bg-black border border-gray-300 dark:border-gray-800 rounded-lg shadow-lg">
+      <div className="max-w-md w-full space-y-8 p-8 max-sm:p-5 bg-white dark:bg-black border border-gray-300 dark:border-gray-800 rounded-lg shadow-lg">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-200">
+          <h2 className="mt-6 text-center text-3xl max-sm:text-2xl font-extrabold text-gray-900 dark:text-gray-200">
             Sign in to Projectoo
           </h2>
         </div>
