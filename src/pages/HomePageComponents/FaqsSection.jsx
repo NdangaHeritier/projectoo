@@ -21,7 +21,7 @@ function FaqSection() {
   return (
     <section id="faqs" className="py-16 bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-gray-900 dark:to-gray-950">
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-6xl text-transparent bg-clip-text bg-gradient-to-b from-gray-600 to-gray-400 font-bold text-center mb-10">Here is what you're asking your self.</h2>
+        <h2 className="text-6xl max-sm:text-4xl text-transparent bg-clip-text bg-gradient-to-b from-gray-600 to-gray-400 font-bold text-center mb-10">Here is what you're asking your self.</h2>
         <div className="space-y-6">
           {faqs.map((faq, i) => (
             <div key={i} className="bg-white dark:bg-gray-900 border border-indigo-100 dark:border-gray-800 rounded-xl p-6 shadow-sm">

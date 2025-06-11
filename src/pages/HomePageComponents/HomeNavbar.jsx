@@ -16,7 +16,7 @@ export default function HomeNavbar() {
           <a href="#faqs" className="hover:text-yellow-300 transition">FAQs</a>
         </div>
         <div className="flex gap-2">
-          <a href="/login" className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-900/70 text-indigo-600 dark:text-indigo-400 font-semibold hover:bg-indigo-200 dark:hover:bg-gray-900 transition">Get Started</a>
+          <a href="/login" className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-900/70 text-indigo-600 dark:text-indigo-400 font-semibold hover:bg-indigo-200 dark:hover:bg-gray-900 transition max-sm:text-sm">Get Started</a>
         </div>
       </div>
     </nav>
