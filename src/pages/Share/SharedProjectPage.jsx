@@ -78,21 +78,6 @@ export default function SharedProject() {
   return (
     <section className="flex justify-center items-center min-h-screen bg-transparent p-0 rounded-xl">
       <div className="border border-zinc-200 dark:border-zinc-800 shadow-xl rounded-2xl p-8 w-full mx-auto bg-white dark:bg-black">
-        <Helmet>
-          <title>
-            {project
-              ? `${project.title || project.name} | Projectoo`
-              : 'Shared Project | Projectoo'}
-          </title>
-          <meta
-            name="description"
-            content={
-              project
-                ? project.description || 'View this shared project on Projectoo.'
-                : 'View a shared project on Projectoo.'
-            }
-          />
-        </Helmet>
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <ClipboardDocumentListIcon className="h-10 w-10 text-indigo-500" />
