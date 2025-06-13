@@ -3,7 +3,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useParams } from "react-router-dom";
 import { ChartPieIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
-import { Helmet } from 'react-helmet-async';
 
 export default function SharedProject() {
   const { projectId } = useParams();
