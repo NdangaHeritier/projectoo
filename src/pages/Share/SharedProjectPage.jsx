@@ -9,6 +9,7 @@ export default function SharedProject() {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function fetchProject() {
@@ -19,9 +20,17 @@ export default function SharedProject() {
           id: projectSnap.id,
           ...projectSnap.data(),
         };
-        // Ensure user data is included
-        if (fetchedProject.user && typeof fetchedProject.user === "string") {
-          // Optionally fetch user info if you want to display it
+        // Fetch user details if userId exists
+        if (fetchedProject.userId) {
+            const userRef = doc(db, "users", fetchedProject.userId);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+            setUser({ id: userSnap.id, ...userSnap.data() });
+            } else {
+            setUser(null);
+            }
+        } else {
+            setUser(null);
         }
         // Ensure phases is an array
         if (!Array.isArray(fetchedProject.phases)) {
@@ -91,7 +100,7 @@ export default function SharedProject() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{project.title}</h2>
             <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-2">
               <span className="h-4 w-4 border border-white dark:border-black ring-2 ring-indigo-500/50 bg-gradient-to-br from-indigo-400 to-pink-500 rounded-full"></span>
-              Planned by {project.user?.name || "Unknown"}
+              Planned by {user?.displayName || user?.name || "Unknown"}
             </p>
           </div>
         </div>
