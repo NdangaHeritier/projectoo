@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import SharedProject from './pages/Share/SharedProjectPage';
 
 function AppRoutes() {
   const { currentUser } = useAuth();
@@ -44,6 +45,7 @@ function AppRoutes() {
                 <ProjectDetails />
               </PrivateRoute>
             } />
+            <Route path="/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/:projectId" element={<SharedProject />} />
           </Routes>
         </div>
       </div>

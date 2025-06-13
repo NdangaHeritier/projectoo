@@ -6,21 +6,24 @@ import {
   doc,
   getDoc,
   updateDoc,
-  arrayUnion,
-  arrayRemove,
+  // arrayUnion,
+  // arrayRemove,
 } from 'firebase/firestore';
 import {
   PlusIcon,
   TrashIcon,
   CheckIcon,
-  PencilIcon,
+  // PencilIcon,
   XMarkIcon,
   ArrowRightIcon,
   ArrowLeftIcon,
   ChartBarIcon,
   RocketLaunchIcon,
-  ClipboardDocumentListIcon,
-  ClockIcon
+  // ClipboardDocumentListIcon,
+  ClockIcon,
+  ChartPieIcon,
+  ShareIcon,
+  ClipboardDocumentIcon
 } from '@heroicons/react/24/outline';
 import { projectIcons, phaseIcons, getIconComponent, getDefaultPhaseIcon } from '../utils/icons';
 import toast from 'react-hot-toast';
@@ -60,6 +63,7 @@ export default function ProjectDetails() {
   const [showHoursModal, setShowHoursModal] = useState(false);
   const [hoursModalTask, setHoursModalTask] = useState(null); // { phaseId, taskId }
   const [hoursInput, setHoursInput] = useState('');
+  const [isSharingProject, setIsSharingProject] = useState(false);
 
   useEffect(() => {
     console.log('projectId:', projectId, 'currentUser:', currentUser);
@@ -561,8 +565,49 @@ export default function ProjectDetails() {
               <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
               Add Task
             </button>
+
+             <button
+              onClick={() => setIsSharingProject(true)}
+              className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent rounded-md  text-sm font-medium text-indigo-600 bg-transparent hover:bg-indigo-400/10"
+            >
+              <ShareIcon className="-ml-1 mr-2 h-5 w-5" />
+              Share Project
+            </button>
           </div>
         </div>
+
+        {/* sharing project.. */}
+        {isSharingProject &&(
+          <ModalLayout
+            title="Share your project Plan with friends!"
+            onClose={() => setIsSharingProject(false)}
+            showCloseButton={true}
+          >
+            <div className="p-4 sm:p-6 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-black rounded-lg">
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                Share this project with your friends by copying the link below:
+              </p>
+              <div className="flex items-center space-x-2 p-2 ring ring-indigo-500/30 rounded-full bg-indigo-500/10">
+                <input
+                  type="text"
+                  readOnly
+                  value={`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project.id}`}
+                  className="flex-1 border-0 outline-0 rounded-l-full px-3 py-2 bg-transparent text-gray-900 dark:text-zinc-200"
+                />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project.id}`);
+                    toast.success('Link copied to clipboard!');
+                  }}
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-full cursor-pointer hover:bg-indigo-700 transition-colors"
+                >
+                  <ClipboardDocumentIcon className="h-5 w-5 inline-block mr-1" />
+                  Copy Link
+                </button>
+              </div>
+            </div>
+          </ModalLayout>
+        )}
 
         {showProgressReport && (
           <ModalLayout
@@ -851,7 +896,7 @@ export default function ProjectDetails() {
 
         <div className="mt-6 space-y-6">
           {project.phases.map((phase, phaseIndex) => (
-            <div key={phase.id} className="bg-white dark:bg-black border border-zinc-300 dark:border-zinc-800 rounded-lg overflow-hidden">
+            <div key={phase.id} className="bg-transparentrounded-lg overflow-hidden">
               <div className="px-4 py-5 sm:p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
@@ -861,33 +906,39 @@ export default function ProjectDetails() {
                           setIsSelectingIcon(true);
                           setIconTarget({ type: 'phase', id: phase.id });
                         }}
-                        className="mr-3 p-1.5 bg-gray-100 dark:bg-gray-900 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800/70 transition-colors"
+                        className="mr-3 p-2 bg-gray-100 dark:bg-gray-900 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800/70 transition-colors"
                         title="Change phase icon"
                       >
                         {React.createElement(getIconComponent(phase.icon || 'ClipboardDocumentList'), {
-                          className: "h-5 w-5 text-gray-600 dark:text-zinc-400"
+                          className: "h-6 w-6 text-gray-600 dark:text-zinc-400"
                         })}
                       </button>
                       <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
                         <InlineEdit
                           value={phase.name}
                           onSave={(value) => handleUpdatePhase(phase.id, 'name', value)}
-                          className="text-lg font-medium text-gray-900 dark:text-zinc-200"
-                        />
-                        <span className="text-sm text-gray-600 dark:text-gray-500">{calculatePhaseProgress(phase)}% Complete</span>
+                          className="text-xl font-medium text-gray-900 dark:text-zinc-200"
+                        />                        
                       </div>                      
                     </div>
                     <InlineEdit
                       value={phase.description}
                       onSave={(value) => handleUpdatePhase(phase.id, 'description', value)}
                       type="textarea"
-                      className="mt-1 text-sm text-gray-600 dark:text-gray-500 inline-block"
+                      className="mt-2 text-base text-gray-600 dark:text-gray-500 inline-block"
                     />
                   </div>                  
                 </div>
 
-                <div className="mt-4">
+                <div className='pb-3'>
                   <div className="relative pt-1">
+                    <div className="py-3 flex w-full items-center justify-between">
+                      <h2 className="text-zinc-800 dark:text-zinc-300 font-semibold flex items-center">
+                        <ChartPieIcon className='pe-2 h-7 w-7 inline-flex text-indigo-500' />
+                        Phase Progress
+                      </h2>
+                      <span className="text-sm text-gray-600 dark:text-gray-500">{calculatePhaseProgress(phase)}% Complete</span>
+                    </div>
                     <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200 dark:bg-indigo-500/20">
                       <div
                         style={{ width: `${calculatePhaseProgress(phase)}%` }}

@@ -1,0 +1,155 @@
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useParams } from "react-router-dom";
+import { ChartPieIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
+import { Helmet } from 'react-helmet-async';
+
+export default function SharedProject() {
+  const { projectId } = useParams();
+  const [project, setProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProject() {
+      const projectRef = doc(db, "projects", projectId);
+      const projectSnap = await getDoc(projectRef);
+      if (projectSnap.exists()) {
+        const fetchedProject = {
+          id: projectSnap.id,
+          ...projectSnap.data(),
+        };
+        // Ensure user data is included
+        if (fetchedProject.user && typeof fetchedProject.user === "string") {
+          // Optionally fetch user info if you want to display it
+        }
+        // Ensure phases is an array
+        if (!Array.isArray(fetchedProject.phases)) {
+          fetchedProject.phases = [];
+        }
+        // Ensure tasks is an array in each phase
+        fetchedProject.phases.forEach((phase) => {
+          if (!Array.isArray(phase.tasks)) {
+            phase.tasks = [];
+          }
+        });
+        setProject(fetchedProject);
+      } else {
+        setProject(null);
+      }
+      setIsLoading(false);
+    }
+    fetchProject();
+  }, [projectId]);
+
+  if (isLoading) {
+    return (
+      <div className="py-10 w-full flex items-center justify-center min-h-52">
+        <div className="text-gray-700 text-lg dark:text-gray-400">
+          <span className="animate-pulse">Loading Project ...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <section className="p-10 bg-white dark:bg-gray-900 border border-zinc-300 dark:border-zinc-800 shadow-md rounded-xl max-w-xl mx-auto mt-16">
+        <div className="flex flex-col items-center">
+          <ClipboardDocumentListIcon className="h-12 w-12 text-gray-400 mb-4" />
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Project Not Found</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-center">
+            Sorry, we couldn't fetch this project. The link may be invalid or the project was removed.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="flex justify-center items-center min-h-screen bg-transparent p-0 rounded-xl">
+      <div className="border border-zinc-200 dark:border-zinc-800 shadow-xl rounded-2xl p-8 w-full mx-auto bg-white dark:bg-black">
+        <Helmet>
+          <title>
+            {project
+              ? `${project.title || project.name} | Projectoo`
+              : 'Shared Project | Projectoo'}
+          </title>
+          <meta
+            name="description"
+            content={
+              project
+                ? project.description || 'View this shared project on Projectoo.'
+                : 'View a shared project on Projectoo.'
+            }
+          />
+        </Helmet>
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-6">
+          <ClipboardDocumentListIcon className="h-10 w-10 text-indigo-500" />
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{project.title}</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-2">
+              <span className="h-4 w-4 border border-white dark:border-black ring-2 ring-indigo-500/50 bg-gradient-to-br from-indigo-400 to-pink-500 rounded-full"></span>
+              Planned by {project.user?.name || "Unknown"}
+            </p>
+          </div>
+        </div>
+        {/* Description */}
+        <div className="mb-6">
+          <p className="text-lg text-gray-700 dark:text-gray-200">{project.description || "No description provided."}</p>
+        </div>
+        {/* Phases */}
+        <div className="mb-4">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Phases</h3>
+          <div className="space-y-6">
+            {project.phases.length > 0 ? (
+              project.phases.map((phase, idx) => (
+                <div key={phase.id || idx} className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <ChartPieIcon className="h-7 w-7 text-indigo-400" />
+                    <span className="font-semibold text-base text-gray-900 dark:text-gray-100">{phase.name}</span>
+                  </div>
+                  <p className="text-gray-600 py-3 dark:text-gray-300 text-sm mb-2">{phase.description}</p>
+                  {phase.tasks.length > 0 && (
+                    <ul className="flex flex-col gap-3 mt-2">
+                      {phase.tasks.map((task, tIdx) => (
+                        <li key={task.id || tIdx} className="flex items-start justify-start gap-2">
+                          <span className="rounded-full flex items-center justify-center border border-indigo-200 dark:border-indigo-700 bg-white dark:bg-black w-6 h-6 text-xs font-bold text-indigo-600">{tIdx + 1}</span>
+                          <div className="flex-1">
+                            <span className={`text-base ${task.status === "Completed" ? "line-through text-green-600" : "text-gray-800 dark:text-gray-200"}`}>
+                              {task.title}
+                            </span>
+                            {task.status === "Pending" && (
+                              <span className="ml-2 text-xs text-yellow-600 font-semibold">(In Progress)</span>
+                            )}
+                            {task.status === "Completed" && (
+                              <span className="ml-2 text-xs text-green-600 font-semibold">(Done)</span>
+                            )}
+                            <div className="desc text-sm text-gray-600 dark:text-gray-400">
+                              {task.description || "No description provided."}
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {phase.tasks.length === 0 && (
+                    <div className="text-gray-400 italic mt-2">No tasks in this phase yet.</div>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="text-gray-400 italic">No phases added yet.</div>
+            )}
+          </div>
+        </div>
+        {/* Footer */}
+        <div className="flex items-center gap-2 mt-8">
+          <img src="/favicon.svg" className="w-7 h-7" alt="Projectoo logo" />
+          <span className="text-gray-500 dark:text-gray-400 text-sm">Shared via Projectoo</span>
+        </div>
+      </div>
+    </section>
+  );
+}

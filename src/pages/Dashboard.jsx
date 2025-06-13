@@ -284,11 +284,20 @@ export default function Dashboard() {
                     </button>
                   )}
                   {expanded && (
+                    <button
+                    className="text-indigo-600 hover:underline text-xs font-semibold"
+                    onClick={() => setExpanded(false)}
+                    type="button"
+                    >
+                    Show less
+                    </button>
+                  )}
+                  {projectId && (
                     <Link
                     to={`/project/${projectId}`}
                     className="text-indigo-600 hover:underline text-xs font-semibold ml-2"
                     >
-                    View Details
+                    View Project
                     </Link>
                   )}
                   </span>
