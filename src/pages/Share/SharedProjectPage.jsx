@@ -9,44 +9,58 @@ export default function SharedProject() {
   const [project, setProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null); // 🆕 add error state
 
   useEffect(() => {
+    if (!projectId) {
+      setError("Invalid project ID in URL.");
+      setIsLoading(false);
+      return;
+    }
+
     async function fetchProject() {
-      const projectRef = doc(db, "projects", projectId);
-      const projectSnap = await getDoc(projectRef);
-      if (projectSnap.exists()) {
+      setIsLoading(true);
+      try {
+        const projectRef = doc(db, "projects", projectId);
+        const projectSnap = await getDoc(projectRef);
+
+        if (!projectSnap.exists()) {
+          setError("Project not found.");
+          setIsLoading(false);
+          return;
+        }
+
         const fetchedProject = {
           id: projectSnap.id,
           ...projectSnap.data(),
         };
-        // Fetch user details if userId exists
+
         if (fetchedProject.userId) {
-            const userRef = doc(db, "users", fetchedProject.userId);
-            const userSnap = await getDoc(userRef);
-            if (userSnap.exists()) {
+          const userRef = doc(db, "users", fetchedProject.userId);
+          const userSnap = await getDoc(userRef);
+          if (userSnap.exists()) {
             setUser({ id: userSnap.id, ...userSnap.data() });
-            } else {
-            setUser(null);
-            }
-        } else {
-            setUser(null);
+          }
         }
-        // Ensure phases is an array
+
+        // Validate structure
         if (!Array.isArray(fetchedProject.phases)) {
           fetchedProject.phases = [];
         }
-        // Ensure tasks is an array in each phase
         fetchedProject.phases.forEach((phase) => {
           if (!Array.isArray(phase.tasks)) {
             phase.tasks = [];
           }
         });
+
         setProject(fetchedProject);
-      } else {
-        setProject(null);
+      } catch (err) {
+        console.error("🔥 Firebase Error:", err);
+        setError("Something went wrong while loading the project.");
       }
       setIsLoading(false);
     }
+
     fetchProject();
   }, [projectId]);
 
@@ -59,16 +73,14 @@ export default function SharedProject() {
       </div>
     );
   }
-
-  if (!project) {
+  
+  if (error) {
     return (
       <section className="p-10 bg-white dark:bg-gray-900 border border-zinc-300 dark:border-zinc-800 shadow-md rounded-xl max-w-xl mx-auto mt-16">
         <div className="flex flex-col items-center">
-          <ClipboardDocumentListIcon className="h-12 w-12 text-gray-400 mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">Project Not Found</h2>
-          <p className="text-gray-500 dark:text-gray-400 text-center">
-            Sorry, we couldn't fetch this project. The link may be invalid or the project was removed.
-          </p>
+          <ClipboardDocumentListIcon className="h-12 w-12 text-red-400 mb-4" />
+          <h2 className="text-2xl font-bold text-red-600 mb-2">Error</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-center">{error}</p>
         </div>
       </section>
     );
@@ -84,7 +96,7 @@ export default function SharedProject() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{project.title}</h2>
             <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-2">
               <span className="h-4 w-4 border border-white dark:border-black ring-2 ring-indigo-500/50 bg-gradient-to-br from-indigo-400 to-pink-500 rounded-full"></span>
-              Planned by {user?.displayName || user?.name || "Unknown"}
+              Planned by {user?.displayName || user?.name || "Anonymous"}
             </p>
           </div>
         </div>
