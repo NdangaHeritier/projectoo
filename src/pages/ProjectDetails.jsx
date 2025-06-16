@@ -587,7 +587,7 @@ export default function ProjectDetails() {
               <p className="text-gray-700 dark:text-gray-300 mb-4">
                 Share this project with your friends by copying the link below:
               </p>
-              <div className="flex items-center space-x-2 p-2 ring ring-indigo-500/30 rounded-full bg-indigo-500/10">
+              <div className="flex items-center max-sm:justify-between w-full space-x-2 p-2 ring ring-indigo-500/30 rounded-full bg-indigo-500/10">
                 <input
                   type="text"
                   readOnly
