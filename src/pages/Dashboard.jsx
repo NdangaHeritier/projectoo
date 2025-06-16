@@ -6,14 +6,14 @@ import {
   PlusIcon,
   TrashIcon,
   ArrowRightIcon,
-  ClockIcon,
-  EllipsisHorizontalCircleIcon
+  ClockIcon
 } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { projectIcons, getIconComponent } from '../utils/icons';
 import ModalLayout from '../components/ModalLayout';
 import { StopIcon } from '@heroicons/react/20/solid';
+import NotesBoard from './NotesTakingApp/NotesTakingBoard';
 
 export default function Dashboard() {
   const { currentUser } = useAuth();
@@ -365,6 +365,10 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {/* Notes board - where note taking is done. from */}
+
+      <NotesBoard />
     </div>
   );
 } 

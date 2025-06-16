@@ -33,6 +33,8 @@ import ModalLayout from '../components/ModalLayout';
 import React from 'react';
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
 import SelectMenu from '../components/SelectMenu';
+import OverallProgressCard from './ProjectDetailsComponents/OverallProgressCard';
+import ShareProjectModal from './ProjectDetailsComponents/ShareProjectModal';
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
@@ -582,31 +584,9 @@ export default function ProjectDetails() {
             title="Share your project Plan with friends!"
             onClose={() => setIsSharingProject(false)}
             showCloseButton={true}
-          >
-            <div className="p-4 sm:p-6 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-black rounded-lg">
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                Share this project with your friends by copying the link below:
-              </p>
-              <div className="flex items-center space-x-2 p-2 ring ring-indigo-500/30 rounded-full bg-indigo-500/10">
-                <input
-                  type="text"
-                  readOnly
-                  value={`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project.id}`}
-                  className="flex-1 border-0 outline-0 rounded-l-full px-3 py-2 bg-transparent text-gray-900 dark:text-zinc-200"
-                />
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project.id}`);
-                    toast.success('Link copied to clipboard!');
-                  }}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-full cursor-pointer hover:bg-indigo-700 transition-colors"
-                >
-                  <ClipboardDocumentIcon className="h-5 w-5 inline-block mr-1" />
-                  Copy Link
-                </button>
-              </div>
-            </div>
-          </ModalLayout>
+        >
+          <ShareProjectModal project_id={project.id} />
+        </ModalLayout>
         )}
 
         {showProgressReport && (
@@ -618,6 +598,8 @@ export default function ProjectDetails() {
             <ProjectProgressReport project={project} />
           </ModalLayout>
         )}
+
+        {/* Selecting Icon for specific phase to editi it/ it select a pannel with icons to pick one you like, */}
 
         {isSelectingIcon && (
           <div className="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
@@ -655,6 +637,8 @@ export default function ProjectDetails() {
           </div>
         )}
 
+
+        {/* Setting Hours that you have spended on a task. */}
         {showHoursModal && (
           <ModalLayout
             title="How many hours did you spend?"
@@ -723,34 +707,7 @@ export default function ProjectDetails() {
         )}
 
         <div className="mt-6">
-          <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 shadow rounded-lg relative overflow-hidden p-6">
-            <div className="rounded-full bg-indigo-500/50 absolute left-30 h-30 w-30 z-0"></div>
-            <div className="rounded-full bg-indigo-500/50 absolute right-0 h-20 w-20 z-0"></div>
-            <div className="rounded-full bg-indigo-500/50 absolute right-20 bottom-0 h-10 w-10 z-0"></div>
-            <h3 className="text-lg font-medium text-gray-100 relative z-10">Overall Progress</h3>
-            <div className="mt-2">
-              <div className="relative pt-1 z-10">
-                <div className="flex mb-2 items-center justify-between">
-                  <div>
-                    <span className="text-xs font-semibold inline-block py-1 px-3 uppercase rounded-full text-indigo-200 bg-indigo-200/30">
-                      Progress
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-sm font-semibold inline-block text-zinc-100">
-                      {calculateOverallProgress()}%
-                    </span>
-                  </div>
-                </div>
-                <div className="overflow-hidden h-3 mb-4 rounded bg-indigo-400/50 border border-indigo-400">
-                  <div
-                    style={{ width: `${calculateOverallProgress()}%` }}
-                    className="bg-indigo-200 h-3"
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <OverallProgressCard project={project} />
         </div>
 
         {isAddingPhase && (
