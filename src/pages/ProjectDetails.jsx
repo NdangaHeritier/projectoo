@@ -896,8 +896,8 @@ export default function ProjectDetails() {
 
         <div className="mt-6 space-y-6">
           {project.phases.map((phase, phaseIndex) => (
-            <div key={phase.id} className="bg-transparentrounded-lg overflow-hidden">
-              <div className="px-4 py-5 sm:p-6">
+            <div key={phase.id} className="bg-transparent overflow-hidden">
+              <div className="px-1 py-5">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center">
