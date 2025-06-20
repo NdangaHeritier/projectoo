@@ -22,3 +22,14 @@
   font-weight: 400;
   font-style: normal;
 }
+
+/* Add in your globals.css */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #9ca3af; /* default light thumb */
+}
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* dark mode thumb */
+}

@@ -1,12 +1,11 @@
 import { CodeBracketIcon, GlobeAltIcon, PlusIcon, SparklesIcon } from "@heroicons/react/24/outline";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import Notes from "./Notes";
 import AddQuickNoteForm from "./AddQuickNotes";
 import ModalLayout from "../../components/ModalLayout";
-import AddLinkForm from "./AddLinks";
-import AddSnippetForm from "./AddSnippets";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function NotesBoard() {
   const [isAddingNotes, setIsAddingNotes] = useState(false);
@@ -17,19 +16,25 @@ export default function NotesBoard() {
   const [modalType, setModalType] = useState('');
   const closeModal = () => setModalType('');
 
+  // current user
+  const { currentUser } = useAuth();
   const fetchNotes = async () => {
-    const snap = await getDocs(collection(db, "notes"));
+    const snap = await getDocs(query(collection(db, "notes"), where("userId", "==", currentUser.uid)));
     const allNotes = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return allNotes;
   };
 
   useEffect(() => {
-    fetchNotes().then((notes) => {
-      setNotes(notes);
-      setQuickNotes(notes.filter(n => n.type === "Quick Notes"));
-      setLinkNotes(notes.filter(n => n.type === "Link"));
-      setSnippetNotes(notes.filter(n => n.type === "Snippet"));
-    });
+    const interval = setInterval(() => {
+      fetchNotes().then((notes) => {
+        setNotes(notes);
+        setQuickNotes(notes.filter(n => n.type === "Quick Notes"));
+        setLinkNotes(notes.filter(n => n.type === "Link"));
+        setSnippetNotes(notes.filter(n => n.type === "Snippet"));
+      });
+    }, 100); // every 100ms
+
+    return () => clearInterval(interval); // cleanup on unmount
   }, []);
 
   return (
@@ -54,14 +59,14 @@ export default function NotesBoard() {
           </button>
 
           {isAddingNotes && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow z-10">
-              <button onClick={() => { setModalType("quick"); setIsAddingNotes(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-black border border-gray-300 dark:border-gray-800 overflow-hidden p-1 rounded-md shadow z-10">
+              <button onClick={() => { setModalType("quick"); setIsAddingNotes(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer rounded-sm">
                 Quick Note
               </button>
-              <button onClick={() => { setModalType("snippet"); setIsAddingNotes(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              <button onClick={() => { setModalType("snippet"); setIsAddingNotes(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer rounded-sm">
                 Snippet
               </button>
-              <button onClick={() => { setModalType("link"); setIsAddingNotes(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              <button onClick={() => { setModalType("link"); setIsAddingNotes(false); }} className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 cursor-pointer rounded-sm">
                 Link
               </button>
             </div>
@@ -72,19 +77,19 @@ export default function NotesBoard() {
       {/* Adding Notes modals! */}
       {modalType === "quick" && (
         <ModalLayout title="Add Quick Note" onClose={closeModal}>
-          <AddQuickNoteForm onClose={closeModal} />
+          <AddQuickNoteForm onClose={closeModal} label="Quick Notes" />
         </ModalLayout>
       )}
 
       {modalType === "snippet" && (
         <ModalLayout title="Add Snippet" onClose={closeModal}>
-          <AddSnippetForm onClose={closeModal} />
+          <AddQuickNoteForm onClose={closeModal} label="Snippet" />
         </ModalLayout>
       )}
 
       {modalType === "link" && (
         <ModalLayout title="Add Link" onClose={closeModal}>
-          <AddLinkForm onClose={closeModal} />
+          <AddQuickNoteForm onClose={closeModal} label="Link" />
         </ModalLayout>
       )}
       <div className="taken-notes">
