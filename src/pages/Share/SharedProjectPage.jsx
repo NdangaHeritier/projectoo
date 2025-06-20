@@ -87,8 +87,8 @@ export default function SharedProject() {
   }
 
   return (
-    <section className="flex justify-center items-center min-h-screen bg-transparent p-0 rounded-xl">
-      <div className="border border-zinc-200 dark:border-zinc-800 shadow-xl rounded-2xl p-8 w-full mx-auto bg-white dark:bg-black">
+    <section className="flex justify-center items-center min-h-screen bg-transparent p-0 rounded-xl -mx-2">
+      <div className="border border-zinc-200 dark:border-zinc-800 shadow-xl rounded-2xl p-8 max-sm:px-5 max-sm:py-6 w-full mx-auto bg-white dark:bg-black">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <ClipboardDocumentListIcon className="h-10 w-10 text-indigo-500" />
