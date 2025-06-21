@@ -7,12 +7,12 @@ export default function ShareProjectModal ({project_id})
             <p className="text-gray-700 dark:text-gray-300 mb-4">
             Share this project with your friends by copying the link below:
             </p>
-            <div className="flex items-center space-x-2 p-2 ring ring-indigo-500/30 rounded-full bg-indigo-500/10">
+            <div className="flex items-center space-x-2 max-sm:space-x-1 p-2 ring ring-indigo-500/30 rounded-full bg-indigo-500/10">
             <input
                 type="text"
                 readOnly
                 value={`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project_id}`}
-                className="flex-1 border-0 outline-0 rounded-l-full px-3 py-2 bg-transparent text-gray-900 dark:text-zinc-200"
+                className="flex-1 border-0 outline-0 rounded-l-full px-3 py-2 bg-transparent text-gray-900 dark:text-zinc-200 max-sm:w-1/2"
             />
             <button
                 onClick={() => {
