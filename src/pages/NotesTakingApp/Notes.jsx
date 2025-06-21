@@ -20,7 +20,7 @@ export default function Notes ({quickNotes, snippetNotes, linkNotes}){
                     </button>
                 </div>
                 ) : (
-                <div className="py-3 grid grid-cols-3 gap-3">
+                <div className="py-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {/* Map quick notes here */}
                     {quickNotes.map(note => (
                         <div key={note.id} className="ring-2 ring-gray-300 dark:ring-gray-800 overflow-hidden relative bg-black rounded-xl mb-2">
@@ -53,7 +53,7 @@ export default function Notes ({quickNotes, snippetNotes, linkNotes}){
                     </button>
                 </div>
                 ) : (
-                <div className="py-3 grid grid-cols-3 gap-3">
+                <div className="py-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {/* Map quick notes here */}
                     {snippetNotes.map(note => (
                         <div key={note.id} className="ring-2 ring-gray-300 dark:ring-gray-800 overflow-hidden relative bg-black rounded-xl mb-2">
@@ -86,7 +86,7 @@ export default function Notes ({quickNotes, snippetNotes, linkNotes}){
                     </button>
                 </div>
                 ) : (
-                <div className="py-3 grid grid-cols-3 gap-3">
+                <div className="py-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {/* Map quick notes here */}
                     {linkNotes.map(note => (
                         <div key={note.id} className="ring-2 ring-gray-300 dark:ring-gray-800 overflow-hidden relative bg-black rounded-xl mb-2">
