@@ -43,7 +43,7 @@ export default function NotesBoard() {
         <div className="inline-flex items-center gap-2 text-2xl font-bold">
           Notes
           <div className="bg-gradient-to-r from-indigo-500 to-pink-500 text-xs p-0.5 bg-gray-100 rounded-md">
-            <div className="bg-gray-100 rounded-sm px-2 py-1">
+            <div className="bg-gray-100 dark:bg-black rounded-sm px-2 py-1">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500">NEW</span>
             </div>
           </div>
