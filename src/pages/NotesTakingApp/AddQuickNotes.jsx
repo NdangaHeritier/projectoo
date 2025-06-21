@@ -54,7 +54,7 @@ export default function AddQuickNoteForm({ onClose, label='Quick Notes' }) {
   
   return (
     <section className="p-4">
-      <div className="header bg-gray-900 rounded-t-md flex w-full items-center justify-between">
+      <div className="header bg-transparent rounded-t-md flex w-full items-center justify-between">
         <div className="tabs-switcher inline-grid grid-cols-2 gap-2">
           <button
             className={`${showOutput ? `border-transparent`: `border-gray-300 dark:border-gray-700 text-indigo-500`} px-2 py-1 font-semibold border-2 border-b-0  bg-transparent inline-flex items-center justify-center gap-1 text-sm rounded-t-md`}
@@ -121,7 +121,7 @@ export default function AddQuickNoteForm({ onClose, label='Quick Notes' }) {
               <button
                 type="submit"
                 disabled={loadSaving}
-                className={`disabled:cursor-not-allowed disabled:opacity-50 text-center bg-gray-900 rounded-sm px-4 text-sm py-2 font-semibold text-gray-200 dark:text-pink-500 dark:bg-pink-950/20 border border-pink-400`}
+                className={`disabled:cursor-not-allowed disabled:opacity-50 text-center bg-pink-500/20 rounded-sm px-4 text-sm py-2 font-semibold text-pink-600 dark:text-pink-500 dark:bg-pink-950/20 border border-pink-400`}
               >
                 {loadSaving ? (
                   <svg
