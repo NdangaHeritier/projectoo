@@ -33,7 +33,7 @@ function AppRoutes() {
     <div className="min-h-screen relative bg-gray-100 dark:bg-gray-950 flex flex-col">
       <Navbar isHome={!currentUser} />
       <div className="flex-1">
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="py-8">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

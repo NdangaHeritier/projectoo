@@ -1,4 +1,4 @@
-import { CodeBracketIcon, GlobeAltIcon, PlusIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, GlobeAltIcon, LinkIcon, PlusIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
@@ -6,6 +6,7 @@ import Notes from "./Notes";
 import AddQuickNoteForm from "./AddQuickNotes";
 import ModalLayout from "../../components/ModalLayout";
 import { useAuth } from "../../contexts/AuthContext";
+import { CodeBracketSquareIcon } from "@heroicons/react/24/solid";
 
 export default function NotesBoard() {
   const [isAddingNotes, setIsAddingNotes] = useState(false);
@@ -98,7 +99,25 @@ export default function NotesBoard() {
         )}
 
         {notes.length > 0 && (
-          <Notes quickNotes={quickNotes} snippetNotes={snippetNotes} linkNotes={linkNotes} />
+          <div className="grid grid-cols-1 gap-3">
+            <div className="filter flex items-center justify-center overflow-x-auto max-sm:w-auto">
+              <div className="fillter-btn grid grid-cols-3 gap-2">
+                <button className="font-semibold text-sm text-gray-800 dark:text-gray-200 flex items-center justify-start gap-2 hover:bg-gray-900 rounded-md px-4 py-2">
+                  <SparklesIcon className="w-4 h-4 text-gray-400 dark:text-gray-600" />
+                  <span className="title">QUick Notes</span>
+                </button>
+                <button className="font-semibold text-sm text-gray-800 dark:text-gray-200 flex items-center justify-start gap-2 hover:bg-gray-900 rounded-md px-4 py-2">
+                  <CodeBracketSquareIcon className="w-4 h-4 text-gray-400 dark:text-gray-600" />
+                  <span className="title">Codes</span>
+                </button>
+                <button className="font-semibold text-sm text-gray-800 dark:text-gray-200 flex items-center justify-start gap-2 hover:bg-gray-900 rounded-md px-4 py-2">
+                  <LinkIcon className="w-4 h-4 text-gray-400 dark:text-gray-600" />
+                  <span className="title">Links</span>
+                </button>
+              </div>
+            </div>
+            <Notes quickNotes={quickNotes} snippetNotes={snippetNotes} linkNotes={linkNotes} />
+          </div>
         )}
       </div>
     </section>
