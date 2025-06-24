@@ -102,7 +102,7 @@ export default function ViewNote(){
     }
     return(
         <section className="viewNotes">
-            <div className="view-head p-5 flex items-center justify-between">
+            <div className="view-head p-5 max-sm:px-2 flex items-center justify-between">
                 <Link to={`/`} className="rounded-md inline-flex items-center justify-center gap-1 px-3 py-1 font-semibold text-indigo-600 dark:text-indigo-500 hover:underline hover:bg-gray-500/10">
                     <ChevronLeftIcon className="w-4 h-4 text-inherit" />
                     <span className="text-inherit">Back</span>
@@ -137,8 +137,8 @@ export default function ViewNote(){
                     </div>
                 )}
             </div>
-            <div className="notes-desc grid grid-rows-1 min-h-svh p-5">
-                <div className="ring rounded-md p-5 sm:p-8 ring-gray-300 dark:ring-gray-800 shadow-2xl overflow-hidden relative bg-black">
+            <div className="notes-desc grid grid-rows-1 min-h-svh p-5 max-sm:p-2">
+                <div className="ring rounded-md p-2 sm:p-8 ring-gray-300 dark:ring-gray-800 shadow-2xl overflow-hidden relative bg-black">
                     <div className="absolute right-2 top-2 inline-flex gap-2 p-1">
                         <span className="rounded-md bg-pink-500 text-white inline-flex px-2 py-1 text-sm font-semibold items-center gap-1">
                             <SparklesIcon className="w-4 h-4 text-inherit"/>
@@ -146,7 +146,7 @@ export default function ViewNote(){
                         </span>                        
                     </div>
                     <div
-                        className="p-5 bg-white text-gray-700 dark:text-gray-400 dark:bg-black w-full overflow-hidden"
+                        className="p-5 max-sm:p-3 bg-white text-gray-700 dark:text-gray-400 dark:bg-black w-full overflow-hidden"
                         dangerouslySetInnerHTML={{ __html: formatText(note.content) }}
                     />
                 </div>
