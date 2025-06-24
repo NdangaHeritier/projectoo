@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import SharedProject from './pages/Share/SharedProjectPage';
+import ViewNote from './pages/NotesTakingApp/ViewNote';
 
 function AppRoutes() {
   const { currentUser } = useAuth();
@@ -33,7 +34,7 @@ function AppRoutes() {
     <div className="min-h-screen relative bg-gray-100 dark:bg-gray-950 flex flex-col">
       <Navbar isHome={!currentUser} />
       <div className="flex-1">
-        <div className="py-8">
+        <div className="p-0">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -45,6 +46,7 @@ function AppRoutes() {
                 <ProjectDetails />
               </PrivateRoute>
             } />
+            <Route path= "/note/:noteId" element={<ViewNote />} />
             <Route path="/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/:projectId" element={<SharedProject />} />
           </Routes>
         </div>
