@@ -137,8 +137,8 @@ export default function ViewNote(){
                     </div>
                 )}
             </div>
-            <div className="notes-desc grid grid-rows-1 min-h-svh p-5 max-sm:p-2">
-                <div className="ring rounded-md p-2 sm:p-8 ring-gray-300 dark:ring-gray-800 shadow-2xl overflow-hidden relative bg-black">
+            <div className="notes-desc min-h-svh p-5 max-sm:p-2">
+                <div className="ring rounded-xl p-2 sm:p-8 ring-gray-300 dark:ring-gray-800 shadow-2xl overflow-hidden relative bg-white dark:bg-black">
                     <div className="absolute right-2 top-2 inline-flex gap-2 p-1">
                         <span className="rounded-md bg-pink-500 text-white inline-flex px-2 py-1 text-sm font-semibold items-center gap-1">
                             <SparklesIcon className="w-4 h-4 text-inherit"/>
