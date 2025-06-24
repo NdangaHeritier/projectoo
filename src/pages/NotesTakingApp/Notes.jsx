@@ -64,7 +64,7 @@ export default function Notes ({quickNotes, snippetNotes, linkNotes}){
                                     <EllipsisHorizontalIcon className="w-8 h-8 text-gray-900 dark:text-gray-200" />
                                 </button>
                                 {isView == note.id && (
-                                    <Link to={`/note/${note.id}`} className="absolute bottom-7 text-sm right-7 inline-flex gap-x-2 items-center justify-center px-4 py-2 rounded-full rounded-br-md bg-gray-200 text-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 dark:text-gray-300 border border-gray-500/20">
+                                    <Link to={`/notes/${note.id}`} className="absolute bottom-7 text-sm right-7 inline-flex gap-x-2 items-center justify-center px-4 py-2 rounded-full rounded-br-md bg-gray-200 text-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 dark:text-gray-300 border border-gray-500/20">
                                         View <ArrowUpRightIcon className="text-gray-500 w-4 h-4 p-1 bg-gray-100/10 rounded-full" />
                                     </Link>
                                 )}

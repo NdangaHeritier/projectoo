@@ -46,7 +46,7 @@ function AppRoutes() {
                 <ProjectDetails />
               </PrivateRoute>
             } />
-            <Route path= "/note/:noteId" element={<ViewNote />} />
+            <Route path= "/notes/:noteId" element={<ViewNote />} />
             <Route path="/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/:projectId" element={<SharedProject />} />
           </Routes>
         </div>
