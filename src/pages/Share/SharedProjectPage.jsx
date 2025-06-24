@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useParams } from "react-router-dom";
-import { ChartPieIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
 import { LoadingSpan } from "../../components/LoadingSpan";
+import { ChartPieIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/solid";
 
 export default function SharedProject() {
   const { projectId } = useParams();
@@ -84,8 +84,8 @@ export default function SharedProject() {
   }
 
   return (
-    <section className="flex justify-center items-center min-h-screen bg-transparent p-0 rounded-xl -mx-2">
-      <div className="border border-zinc-200 dark:border-zinc-800 shadow-xl rounded-2xl p-8 max-sm:px-5 max-sm:py-6 w-full mx-auto bg-white dark:bg-black">
+    <section className="flex justify-center items-center min-h-screen bg-transparent p-0">
+      <div className="p-16 max-sm:px-8 w-full bg-white/50 dark:bg-black/50">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <ClipboardDocumentListIcon className="h-10 w-10 text-indigo-500" />
@@ -107,19 +107,19 @@ export default function SharedProject() {
           <div className="space-y-6">
             {project.phases.length > 0 ? (
               project.phases.map((phase, idx) => (
-                <div key={phase.id || idx} className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
+                <div key={phase.id || idx} className="py-5">
                   <div className="flex items-center gap-3 mb-2">
-                    <ChartPieIcon className="h-7 w-7 text-indigo-400" />
-                    <span className="font-semibold text-base text-gray-900 dark:text-gray-100">{phase.name}</span>
+                    <ChartPieIcon className="h-10 w-10 text-indigo-500" />
+                    <span className="font-semibold text-xl text-indigo-500">{phase.name}</span>
                   </div>
                   <p className="text-gray-600 py-3 dark:text-gray-300 text-sm mb-2">{phase.description}</p>
                   {phase.tasks.length > 0 && (
-                    <ul className="flex flex-col gap-3 mt-2">
+                    <ul className="flex flex-col gap-5 mt-2">
                       {phase.tasks.map((task, tIdx) => (
                         <li key={task.id || tIdx} className="flex items-start justify-start gap-2">
                           <span className="rounded-full flex items-center justify-center border border-indigo-200 dark:border-indigo-700 bg-white dark:bg-black w-6 h-6 text-xs font-bold text-indigo-600">{tIdx + 1}</span>
                           <div className="flex-1">
-                            <span className={`text-base ${task.status === "Completed" ? "line-through text-green-600" : "text-gray-800 dark:text-gray-200"}`}>
+                            <span className={`text-base font-semibold text-gray-800 dark:text-gray-200`}>
                               {task.title}
                             </span>
                             {task.status === "Pending" && (
@@ -128,7 +128,7 @@ export default function SharedProject() {
                             {task.status === "Completed" && (
                               <span className="ml-2 text-xs text-green-600 font-semibold">(Done)</span>
                             )}
-                            <div className="desc text-sm text-gray-600 dark:text-gray-400">
+                            <div className="desc text-base py-3 mt-4 pl-3 border-s-4 border-gray-500/30 text-gray-600 dark:text-gray-400">
                               {task.description || "No description provided."}
                             </div>
                           </div>
