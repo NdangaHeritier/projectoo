@@ -9,6 +9,7 @@ import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
 import { PinningFunc } from "../PinningFunc";
 import { useAuth } from "../../contexts/AuthContext";
 import toast from "react-hot-toast";
+import { LoadingSpan } from "../../components/LoadingSpan";
 
 export default function ViewNote(){
     const {formatText} = useRichFormatter();
@@ -79,12 +80,7 @@ export default function ViewNote(){
 
     if(isLoading){
         return(
-            <section className="p-10 flex items-center justify-center gap-5 bg-white dark:bg-gray-900 border border-zinc-300 dark:border-zinc-800 shadow-md rounded-xl max-w-xl mx-auto mt-16">
-                <div className="flex flex-col items-center h-20 w-20 animate-spin p-5 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500">
-                    <div className="w-full h-full rounded-2xl animate-ping bg-white dark:bg-gray-900"></div>
-                </div>
-                <h2 className="text-3xl font-bold text-transparent bg-gradient-to-r from-indigo-500 to-pink-500 bg-clip-text">Loading Notes..</h2>
-            </section>
+            <LoadingSpan text="We are finding your note .." />
         )
     }
 
@@ -138,7 +134,7 @@ export default function ViewNote(){
                 )}
             </div>
             <div className="notes-desc min-h-svh p-5 max-sm:p-2">
-                <div className="ring rounded-xl p-2 sm:p-8 ring-gray-300 dark:ring-gray-800 shadow-2xl overflow-hidden relative bg-white dark:bg-black">
+                <div className="ring rounded-xl p-2 sm:p-8 ring-gray-300 dark:ring-gray-800 shadow-sm overflow-hidden relative bg-white dark:bg-black">
                     <div className="absolute right-2 top-2 inline-flex gap-2 p-1">
                         <span className="rounded-md bg-pink-500 text-white inline-flex px-2 py-1 text-sm font-semibold items-center gap-1">
                             <SparklesIcon className="w-4 h-4 text-inherit"/>

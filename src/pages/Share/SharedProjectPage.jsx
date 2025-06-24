@@ -3,6 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useParams } from "react-router-dom";
 import { ChartPieIcon, ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
+import { LoadingSpan } from "../../components/LoadingSpan";
 
 export default function SharedProject() {
   const { projectId } = useParams();
@@ -66,11 +67,7 @@ export default function SharedProject() {
 
   if (isLoading) {
     return (
-      <div className="py-10 w-full flex items-center justify-center min-h-52">
-        <div className="text-gray-700 text-lg dark:text-gray-400">
-          <span className="animate-pulse">Loading Project ...</span>
-        </div>
-      </div>
+      <LoadingSpan text="Preparing your project ..." />
     );
   }
   

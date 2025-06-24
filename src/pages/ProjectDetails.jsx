@@ -35,6 +35,7 @@ import { CheckCircleIcon } from '@heroicons/react/16/solid';
 import SelectMenu from '../components/SelectMenu';
 import OverallProgressCard from './ProjectDetailsComponents/OverallProgressCard';
 import ShareProjectModal from './ProjectDetailsComponents/ShareProjectModal';
+import { LoadingSpan } from '../components/LoadingSpan';
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
@@ -471,16 +472,7 @@ export default function ProjectDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900/50 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white dark:bg-black border border-zinc-300 dark:border-zinc-800 shadow rounded-lg p-6">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600 dark:text-zinc-500">Loading project details...</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <LoadingSpan text="Loading projects ..." />
     );
   }
 
@@ -655,7 +647,7 @@ export default function ProjectDetails() {
                 step="0.1"
                 value={hoursInput}
                 onChange={e => setHoursInput(e.target.value)}
-                className="w-full border border-gray-300 dark:border-zinc-800 rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full text-black dark:text-white border border-gray-300 dark:border-zinc-800 rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 autoFocus
               />
               <div className="flex justify-end space-x-2">
@@ -665,7 +657,7 @@ export default function ProjectDetails() {
                     setHoursModalTask(null);
                     setHoursInput('');
                   }}
-                  className="px-4 py-2 rounded bg-zinc-200 dark:bg-zinc-900 text-black dark:text-white hover:bg-zinc-300 dark:hover:bg-zinc-900/70"
+                  className="px-4 py-2 rounded bg-zinc-200 dark:bg-zinc-950 text-black dark:text-white hover:bg-zinc-300 dark:hover:bg-black/80 transition-colors"
                 >
                   Cancel
                 </button>
@@ -912,9 +904,9 @@ export default function ProjectDetails() {
                     phase.tasks.map((task) => (
                       <div
                         key={task.id}
-                        className={`border w-full rounded-sm p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 overflow-x-auto ${task.status === 'Completed'
+                        className={`border w-full rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 overflow-x-auto ${task.status === 'Completed'
                           ? 'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-600/50 border-l-6 border-l-indigo-600 hover:border-indigo-400 dark:hover:border-indigo-400/50'
-                          : 'bg-gray-50 dark:bg-zinc-950 border-gray-300 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-700'
+                          : 'bg-gray-50 dark:bg-black border-gray-300 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-700'
                         } transition-colors duration-200`}
                       >
                         <div className="flex-1 min-w-0">

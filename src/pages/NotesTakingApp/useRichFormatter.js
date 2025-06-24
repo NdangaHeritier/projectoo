@@ -36,10 +36,10 @@ export function useRichFormatter() {
     });
 
     escaped = escaped
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*\*(.*?)\*\*/g, `<strong class="text-gray-700 dark:text-gray-300">$1</strong>`)
       .replace(/\/\/(.*?)\/\//g, "<em>$1</em>")
       .replace(/\[(.*?)\]\((https?:\/\/[^\s]+)\)/g, '<a href="$2" target="_blank" class="text-indigo-600 dark:text-indigo-500 font-semibold hover:underline">$1</a>')
-      .replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-900 px-1 rounded">$1</code>')
+      .replace(/`([^`]+)`/g, '<code class="bg-gray-200 dark:bg-gray-900 px-1 rounded">$1</code>')
       .replace(/\n/g, "<br />");
 
     const lines = escaped.split(/<br\s*\/?>/);

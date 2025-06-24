@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import { projectIcons, getIconComponent } from '../utils/icons';
 import ModalLayout from '../components/ModalLayout';
 import { StopIcon } from '@heroicons/react/20/solid';
+import { LoadingSpan } from '../components/LoadingSpan';
 
 export const Projects = () => {
     const { currentUser } = useAuth();
@@ -253,7 +254,7 @@ export const Projects = () => {
         )}
 
         {loading ? (
-          <div className="text-center mt-8">Loading projects...</div>
+          <LoadingSpan text="Loading projects ..." />
         ) : projects.length === 0 ? (
           <div className="text-center mt-8 text-gray-500">
             No projects yet. Create your first project!
