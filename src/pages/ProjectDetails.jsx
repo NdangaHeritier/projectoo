@@ -516,7 +516,7 @@ export default function ProjectDetails() {
       <div className="max-w-7xl max-sm:w-full mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-5 max-sm:flex-col sm:gap-3">
           <div className="flex-1">
-            <div className="flex items-center max-sm:flex-col max-sm gap-3 mb-2">
+            <div className="flex items-center max-sm:items-start max-sm:flex-col max-sm gap-3 mb-2">
               {project.icon && (
                 <button
                   onClick={() => {
