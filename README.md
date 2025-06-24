@@ -1,7 +1,8 @@
 ![projectoo-snap](https://github.com/user-attachments/assets/41a890bf-26c7-4fe0-92bb-4b0ba813feb6)
 # 🚀 Projectoo — Your All-in-One Digital Brain
 
-**Plan it. Note it. Blog it. Save it. Build it.**  
+> **Plan it. Note it. Blog it. Save it. Build it.**
+
 Projectoo is the productivity cockpit for modern creators, developers, and digital thinkers.
 
 Forget juggling 5 different tools — Projectoo is a unified platform where:
