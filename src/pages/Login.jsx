@@ -26,6 +26,20 @@ export default function Login() {
     }
   }
 
+  // Demo Login with demo user credentials
+  async function handleDemoLogin() { 
+    try {
+      setLoading(true);
+      await login('demo@projectoo.dev', 'demo1234');
+      toast.success('Successfully logged in!');
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to log in with demo account.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="min-h-[80vh] flex items-center justify-center p-6">
       <div className="max-w-md w-full space-y-8 p-8 max-sm:p-5 bg-white dark:bg-black border border-gray-300 dark:border-gray-800 rounded-lg shadow-lg">
@@ -72,13 +86,23 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
+          <div className='flex flex-col gap-2'>
             <button
               type="submit"
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               {loading ? 'Signing in...' : 'Sign in'}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                handleDemoLogin();
+              }}
+              disabled={loading}
+              className="group relative w-full flex justify-center py-2 px-4 text-sm rounded-md text-indigo-600 font-semibold bg-transparent border-2 border-indigo-500 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              {loading ? 'Signing in...' : 'Demo Sign in'}
             </button>
           </div>
 
