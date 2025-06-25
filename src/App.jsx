@@ -55,7 +55,7 @@ function AppRoutes() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/:tab" element={
-              currentUser ? <Dashboard /> : <HomePage />
+              currentUser ? <Dashboard /> : <Navigate to="/" replace />
             } />
             <Route path="/project/:projectId" element={
               <PrivateRoute>
