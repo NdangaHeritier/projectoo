@@ -1,4 +1,5 @@
 import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
 
 export default function ShareProjectModal ({project_id})
 {
@@ -16,8 +17,8 @@ export default function ShareProjectModal ({project_id})
             />
             <button
                 onClick={() => {
-                navigator.clipboard.writeText(`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project_id}`);
-                toast.success('Link copied to clipboard!');
+                    navigator.clipboard.writeText(`${window.location.origin}/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${project_id}`);
+                    toast.success('Link copied to clipboard!');
                 }}
                 className="px-4 py-2 bg-indigo-600 text-white rounded-full cursor-pointer hover:bg-indigo-700 transition-colors"
             >

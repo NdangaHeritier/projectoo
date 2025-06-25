@@ -21,7 +21,7 @@ export default function Navbar() {
   const [showName, setShowName] = useState(false);
 
   return (
-    <nav className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40 shadow-sm">
+    <nav className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between py-4">
           <div className="flex">

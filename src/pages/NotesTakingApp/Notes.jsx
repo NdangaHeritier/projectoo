@@ -16,7 +16,7 @@ export default function Notes ({getQuickNotes, getSnippetNotes, getLinkNotes}){
 
     if (isWaiting) {
         return (
-            <div className="py-6 w-full grid grid-cols-3 gap-5 skeletons max-sm:grid-cols-1">
+            <div className="py-6 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 skeletons">
                 <div className="bg-gray-200 dark:bg-gray-800 animate-pulse rounded-xl h-70"></div>
                 <div className="bg-gray-200 dark:bg-gray-800 animate-pulse rounded-xl h-70"></div>
                 <div className="bg-gray-200 dark:bg-gray-800 animate-pulse rounded-xl h-70"></div>
@@ -32,7 +32,7 @@ export default function Notes ({getQuickNotes, getSnippetNotes, getLinkNotes}){
                     <HashtagIcon strokeWidth={3} className="w-10 h-10 p-3 rounded-full bg-gray-600/20" />
                     <h2 className="text-xl text-pink-500 font-bold">Quick Notes</h2>
                 </div>
-                <div className="py-3 grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div className="py-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {/* Map quick notes here */}
                     {quickNotes.map(note => (
                         <NoteCard
@@ -63,7 +63,7 @@ export default function Notes ({getQuickNotes, getSnippetNotes, getLinkNotes}){
                 <h2 className="text-xl text-indigo-500 font-bold">Code Snippets</h2>
                 </div>
 
-                <div className="py-3 grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div className="py-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {/* Map quick notes here */}
                     {snippetNotes.map(note => (
                         <NoteCard
@@ -94,7 +94,7 @@ export default function Notes ({getQuickNotes, getSnippetNotes, getLinkNotes}){
                 <h2 className="text-xl text-violet-500 font-bold">Links</h2>
                 </div>
 
-                <div className="py-3 grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div className="py-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {/* Map quick notes here */}
                     {linkNotes.map(note => (
                         <NoteCard

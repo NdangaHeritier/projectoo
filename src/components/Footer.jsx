@@ -50,7 +50,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="sm:max-w-7xl max-w-full mx-auto px-4 sm:px-6 lg:px-8 mt-8 flex items-center justify-between max-sm:flex-col gap-5 text-sm text-white">
+      <div className="sm:max-w-7xl max-w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between max-sm:flex-col gap-5 text-sm text-white">
         <span className="flex items-center bg-indigo-400/20 border border-indigo-400 rounded-md py-1 px-2">
           <GlobeAltIcon className="h-5 w-5 mr-2 text-white" />
           <span className=''>www.ndanga.dev</span>

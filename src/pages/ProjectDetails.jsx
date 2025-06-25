@@ -17,15 +17,13 @@ import {
   XMarkIcon,
   ArrowRightIcon,
   ArrowLeftIcon,
-  ChartBarIcon,
   RocketLaunchIcon,
   // ClipboardDocumentListIcon,
   ClockIcon,
   ChartPieIcon,
   ShareIcon,
-  ClipboardDocumentIcon
 } from '@heroicons/react/24/outline';
-import { projectIcons, phaseIcons, getIconComponent, getDefaultPhaseIcon } from '../utils/icons';
+import { projectIcons, phaseIcons } from '../utils/icons';
 import toast from 'react-hot-toast';
 import InlineEdit from '../components/InlineEdit';
 import ProjectProgressReport from '../components/ProjectProgressReport';
@@ -36,6 +34,10 @@ import SelectMenu from '../components/SelectMenu';
 import OverallProgressCard from './ProjectDetailsComponents/OverallProgressCard';
 import ShareProjectModal from './ProjectDetailsComponents/ShareProjectModal';
 import { LoadingSpan } from '../components/LoadingSpan';
+import { ChartBarIcon } from '@heroicons/react/24/solid';
+import { PinningFunc } from './PinningFunc';
+import { PinIcon, UnpinIcon } from '../components/PinIcon';
+import CustomTrendingUpIcon from '../components/CustomTrendIcon';
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
@@ -505,6 +507,52 @@ export default function ProjectDetails() {
   const selectedPhase = phaseOptions.find(option => option.value === selectedPhaseId);
   return (
     <div className="py-6 px-3 sm:px-5">
+      
+      {/* Quick links to share, pin, delete, and view progress reports */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between w-full space-x-4">
+            <button
+              onClick={() => navigate('/projects')}
+              className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent rounded-md  text-sm font-medium text-indigo-600 bg-transparent hover:bg-indigo-400/10"
+            >
+              <ArrowLeftIcon className="mr-1 h-5 w-5" />
+              Back
+            </button>
+
+            <div className="flex items-center justify-end gap-3">
+              <button
+                onClick={() => setIsSharingProject(true)}
+                className="inline-flex cursor-pointer items-center rounded-full text-sm font-medium text-gray-700 dark:text-gray-400 p-2 bg-transparent hover:text-black dark:hover:text-white hover:bg-gray-400/20"
+              >
+                <ShareIcon className="h-5 w-5" />
+              </button>
+              {/* pin */}
+              <button
+                onClick={() => {
+                  PinningFunc('project', project, !project.pinned, project.id);
+                  setProject({ ...project, pinned: !project.pinned });
+                }}
+                className="inline-flex cursor-pointer items-center rounded-full text-sm font-medium p-2 bg-transparent hover:bg-gray-400/20"
+              >
+                {project.pinned ? (
+                  <UnpinIcon className='w-5 h-5 text-indigo-600'/>
+                ) : (
+                  <PinIcon />
+                )}
+              </button>
+              {/* progress report */}
+              <button
+                onClick={() => setShowProgressReport(!showProgressReport)}
+                className="inline-flex cursor-pointer items-center px-3 gap-2 py-2 border border-transparent rounded-md  text-sm font-medium text-indigo-600 bg-indigo-600/10 hover:bg-indigo-600/20"
+              >
+                <CustomTrendingUpIcon className="text-inherit h-5 w-5" />
+                {showProgressReport ? 'Hide Report' : 'Track'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="max-w-7xl max-sm:w-full mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-5 max-sm:flex-col sm:gap-3">
           <div className="flex-1">
@@ -538,13 +586,7 @@ export default function ProjectDetails() {
             />
           </div>
           <div className="gap-4 grid grid-cols-2 bg-indigo-200 dark:bg-indigo-500/10 p-5 rounded-xl max-sm:grid-cols-1 max-sm:w-full max-sm:gap-2">
-            <button
-              onClick={() => setShowProgressReport(!showProgressReport)}
-              className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent rounded-md  text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              <ChartBarIcon className="-ml-1 mr-2 h-5 w-5" />
-              {showProgressReport ? 'Hide Report' : 'View Progress Report'}
-            </button>
+            
             <button
               onClick={() => setIsAddingPhase(true)}
               className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent rounded-md  text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
@@ -558,14 +600,6 @@ export default function ProjectDetails() {
             >
               <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
               Add Task
-            </button>
-
-             <button
-              onClick={() => setIsSharingProject(true)}
-              className="inline-flex cursor-pointer items-center px-4 py-2 border border-transparent rounded-md  text-sm font-medium text-indigo-600 bg-transparent hover:bg-indigo-400/10"
-            >
-              <ShareIcon className="-ml-1 mr-2 h-5 w-5" />
-              Share Project
             </button>
           </div>
         </div>

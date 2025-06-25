@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HashtagIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import toast from 'react-hot-toast';
 import AnalysisBoard from './AnalysisBoard';
@@ -8,6 +8,7 @@ import PinnedNotes from './NotesTakingApp/PinnedNotes';
 import { ClipboardDocumentListIcon } from '@heroicons/react/24/solid';
 import { LoadingSpan } from '../components/LoadingSpan';
 import { useAuth } from '../contexts/AuthContext';
+import { ProjectCard } from '../components/ProjectCard';
 
 export default function PinnedBoard() {
 
@@ -73,6 +74,19 @@ export default function PinnedBoard() {
         fetchPinnedItems();
     }, []);
 
+     async function handleDeleteProject(projectId) {
+      if (window.confirm('Are you sure you want to delete this project?')) {
+        try {
+          await deleteDoc(doc(db, 'projects', projectId));
+            toast.success('Project deleted successfully');
+            fetchPinnedItems();
+        } catch (error) {
+            toast.error('Failed to delete project');
+            console.error('Error deleting project:', error);
+        }
+    }
+    }
+
     if(!pinnedNotes && !pinnedProjects && !isLoading && !error){
         return (
             <section className="p-10 bg-white dark:bg-gray-900 border border-zinc-300 dark:border-zinc-800 shadow-md rounded-xl max-w-xl mx-auto mt-16">
@@ -107,8 +121,8 @@ export default function PinnedBoard() {
     }
 
     return (
-        <div className="pinned-board-container px-5 max-sm:px-3">
-            <h2 className="pb-10 text-3xl font-bold text-gray-800 dark:text-gray-200">
+        <div className="pinned-board-container px-5 max-sm:px-0">
+            <h2 className="py-10 pb-15 text-3xl font-bold text-gray-800 dark:text-gray-200">
                 Welcome back, {currentUser?.displayName || currentUser?.email}!
             </h2>
            {/* Analysis board */}
@@ -120,26 +134,9 @@ export default function PinnedBoard() {
                     <h2 className="text-xl text-indigo-500 font-bold">Pinned Projects</h2>
                 </div>
                 {pinnedProjects.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-sm:px-3 py-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-2">
                         {pinnedProjects.map(project => (
-                            <div key={project.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{project.title}</h3>
-                                <p className="text-gray-600 dark:text-gray-400">{project.description}</p>
-                                <div className="mt-2">
-                                    <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-indigo-800 bg-indigo-100 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
-                                        {project.type || "Project"}
-                                    </span>
-                                </div>
-                                <button
-                                    onClick={() => {
-                                        // Handle unpinning project logic here
-                                        console.log(`Unpin project: ${project.id}`);
-                                    }}
-                                    className="mt-3 inline-flex items-center justify-center px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                                >
-                                    Unpin Project
-                                </button>
-                            </div>
+                           <ProjectCard key={project.id} project={project} onClick={() => handleDeleteProject(project.id)} />
                         ))}
                     </div>
                 ) : (

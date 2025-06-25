@@ -2,18 +2,12 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../firebase';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, limit } from 'firebase/firestore';
-import {
-  PlusIcon,
-  TrashIcon,
-  ArrowRightIcon,
-  ClockIcon
-} from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import { projectIcons, getIconComponent } from '../utils/icons';
 import ModalLayout from '../components/ModalLayout';
-import { StopIcon } from '@heroicons/react/20/solid';
 import { LoadingSpan } from '../components/LoadingSpan';
+import { ProjectCard } from '../components/ProjectCard';
 
 export const Projects = () => {
     const { currentUser } = useAuth();
@@ -263,101 +257,9 @@ export const Projects = () => {
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => {
               const IconComponent = getIconComponent(project.icon);
-                // ReadMore component for project description
-                function ReadMore({ text, maxLength = 230, projectId }) {
-                const [expanded, setExpanded] = useState(false);
-                if (text.length <= maxLength) {
-                  return <span>{text}</span>;
-                }
-                return (
-                  <span>
-                  {expanded ? text : text.slice(0, maxLength) + '... '}
-                  {!expanded && (
-                    <button
-                    className="text-indigo-600 hover:underline text-xs font-semibold"
-                    onClick={() => setExpanded(true)}
-                    type="button"
-                    >
-                    Read more
-                    </button>
-                  )}
-                  {expanded && (
-                    <button
-                    className="text-indigo-600 hover:underline text-xs font-semibold"
-                    onClick={() => setExpanded(false)}
-                    type="button"
-                    >
-                    Show less
-                    </button>
-                  )}
-                  {projectId && (
-                    <Link
-                    to={`/project/${projectId}`}
-                    className="text-indigo-600 hover:underline text-xs font-semibold ml-2"
-                    >
-                    View Project
-                    </Link>
-                  )}
-                  </span>
-                );
-                }
 
                 return (
-                <div
-                  key={project.id}
-                  className="bg-white dark:bg-black border border-zinc-300 dark:border-zinc-800 overflow-hidden rounded-lg hover:shadow-lg transition-shadow duration-200"
-                >
-                  <div className="px-4 py-5 sm:p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                    <div className="flex-shrink-0 h-10 w-10 bg-indigo-100 dark:bg-indigo-600/20 rounded-lg flex items-center justify-center">
-                      <IconComponent className="h-6 w-6 text-indigo-600" />
-                    </div>
-                    <h3 className="ml-3 text-lg leading-6 font-medium text-gray-900 dark:text-gray-200">
-                      {project.title}
-                    </h3>
-                    </div>
-                    <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleDeleteProject(project.id)}
-                      className="p-2 text-gray-400 hover:text-red-500"
-                    >
-                      <TrashIcon className="h-5 w-5" />
-                    </button>
-                    </div>
-                  </div>
-                  <p className="pt-5 text-sm text-gray-500 min-h-32">
-                    <ReadMore text={project.description} projectId={project.id} />
-                  </p>
-                  <div className="mt-4">
-                    <span className="text-sm font-medium text-gray-500">
-                    <ClockIcon className="inline h-4 w-4 text-indigo-500 mr-1" />
-                    Timeline:
-                    </span>
-                    <span className="ml-2 text-sm text-gray-900 dark:text-gray-200">
-                    {new Date(project.timeline).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <span className=" rounded-full text-white font-semibold px-2 gap-1 pe-3 py-1 text-sm bg-indigo-700 inline-flex items-center">
-                    <StopIcon className='h-4 w-4 rounded-full bg-indigo-300 p-1'/>{project.status}
-                    </span>
-                  </div>
-                  <Link
-                    to={`/project/${project.id}`}
-                    className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 dark:bg-indigo-600/10 hover:bg-indigo-200 dark:hover:bg-indigo-600/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    onClick={(e) => {
-                    if (!project.id) {
-                      e.preventDefault();
-                      toast.error('Invalid project ID');
-                    }
-                    }}
-                  >
-                    View Details
-                    <ArrowRightIcon className="ml-2 h-4 w-4" />
-                  </Link>
-                  </div>
-                </div>
+                  <ProjectCard key={project.id} iconComponent={ <IconComponent className="h-6 w-6 text-indigo-600" /> } project={project} onClick={() => handleDeleteProject(project.id)} />
                 );
             })}
           </div>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
@@ -11,10 +11,19 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import SharedProject from './pages/Share/SharedProjectPage';
 import ViewNote from './pages/NotesTakingApp/ViewNote';
+import { LoadingSpan } from './components/LoadingSpan';
+import MainSkeleton from './components/MainSkeleton';
 
 function AppRoutes() {
-  const { currentUser } = useAuth();
+  const { currentUser, authLoading } = useAuth();
   const location = useLocation();
+
+  if (authLoading) {
+    // Show a global spinner while auth state is being determined
+    return (
+      <MainSkeleton />
+    );
+  }
 
   // Only show layout for non-homepage routes
   const isHome = location.pathname === '/';
@@ -36,9 +45,16 @@ function AppRoutes() {
       <div className="flex-1">
         <div className="p-0">
           <Routes>
+            {/* Root route */}
+            <Route
+              path="/"
+              element={
+                currentUser ? <Navigate to="/pinned" replace /> : <HomePage />
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/" element={
+            <Route path="/:tab" element={
               currentUser ? <Dashboard /> : <HomePage />
             } />
             <Route path="/project/:projectId" element={
@@ -46,7 +62,7 @@ function AppRoutes() {
                 <ProjectDetails />
               </PrivateRoute>
             } />
-            <Route path= "/notes/:noteId" element={<ViewNote />} />
+            <Route path="/notes/:noteId" element={<ViewNote />} />
             <Route path="/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/:projectId" element={<SharedProject />} />
           </Routes>
         </div>
