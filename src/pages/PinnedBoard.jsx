@@ -107,7 +107,10 @@ export default function PinnedBoard() {
     }
 
     return (
-        <div className="pinned-board-container p-5 max-sm:p-3">
+        <div className="pinned-board-container px-5 max-sm:px-3">
+            <h2 className="pb-10 text-3xl font-bold text-gray-800 dark:text-gray-200">
+                Welcome back, {currentUser?.displayName || currentUser?.email}!
+            </h2>
            {/* Analysis board */}
            <AnalysisBoard />
            {/* Pinned Projects */}

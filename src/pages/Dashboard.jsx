@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   return (
     <section className="main-bar flex items-start justify-start max-sm:flex-col px-3">
-      <div className="menubar min-w-20 h-full max-sm:w-full bg-transparent py-5 sm:py-18 sticky top-10 max-sm:fixed max-sm:bottom-0 max-sm:top-7/8 max-sm:px-2 max-sm:left-0 max-sm:right-0 max-sm:bg-black z-30">
+      <div className="menubar min-w-20 h-full max-sm:w-full bg-transparent py-3 sm:py-18 sticky top-10 max-sm:fixed max-sm:bottom-0 max-sm:top-7/8 max-sm:px-2 max-sm:left-0 max-sm:right-0 max-sm:dark:bg-black max-sm:shadow-lg max-sm:bg-white max-sm:border-t border-gray-300 dark:border-gray-800 z-30">
         <div className="links grid grid-cols-1 max-sm:grid-cols-4 gap-1 max-sm:w-full">
           <button
             type='button'
@@ -79,7 +79,7 @@ export default function Dashboard() {
           </button>          
         </div>
       </div>
-      <div className="py-6 text-gray-800 dark:text-gray-200 flex-1 min-h-120"> 
+      <div className="py-15 max-sm:py-4 text-gray-800 dark:text-gray-200 flex-1 min-h-120 min-w-full max-sm:w-full"> 
 
         {showPinned && (
           <PinnedBoard />

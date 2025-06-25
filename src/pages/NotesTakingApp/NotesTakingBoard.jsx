@@ -77,8 +77,8 @@ export default function NotesBoard() {
   }
 
   return (
-    <section className="NotesBoard py-5 sm:px-5 w-full">
-      <div className="buttons py-3 flex items-center justify-between gap-3 w-full">
+    <section className="NotesBoard sm:px-5 w-full">
+      <div className="buttons pb-3 flex items-center justify-between gap-3 w-full">
         <div className="inline-flex items-center gap-2 text-2xl font-bold">
           Notes
           <div className="bg-gradient-to-r from-indigo-500 to-pink-500 text-xs p-0.5 bg-gray-100 rounded-md">
@@ -151,7 +151,7 @@ export default function NotesBoard() {
                   className={`${typeToShow == "Quick Notes" ? `text-gray-800 dark:text-gray-100 bg-gray-300 dark:bg-gray-800` : `text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900` } font-semibold text-sm flex items-center justify-center gap-2 rounded-md px-3 py-1`}
                   onClick={() => setTypeToShow("Quick Notes")}
                 >
-                  <span className="title">QUick Notes</span>
+                  <span className="title">Quick Notes</span>
                 </button>
                 <button
                   className={`${typeToShow == "Snippet" ? `text-gray-800 dark:text-gray-100 bg-gray-300 dark:bg-gray-800` : `text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-900` } font-semibold text-sm flex items-center justify-center gap-2 rounded-md px-3 py-1`}
@@ -167,10 +167,10 @@ export default function NotesBoard() {
                 </button>
               </div>
             </div>
-            {typeToShow === "All" && <Notes quickNotes={quickNotes} snippetNotes={snippetNotes} linkNotes={linkNotes} /> }
-            {typeToShow === "Quick Notes" && <Notes quickNotes={quickNotes} /> }
-            {typeToShow === "Snippet" && <Notes snippetNotes={snippetNotes} /> }
-            {typeToShow === "Link" && <Notes linkNotes={linkNotes} /> }
+            {typeToShow === "All" && <Notes getQuickNotes={quickNotes} getSnippetNotes={snippetNotes} getLinkNotes={linkNotes} /> }
+            {typeToShow === "Quick Notes" && <Notes getQuickNotes={quickNotes} /> }
+            {typeToShow === "Snippet" && <Notes getSnippetNotes={snippetNotes} /> }
+            {typeToShow === "Link" && <Notes getLinkNotes={linkNotes} /> }
           </div>
         )}
       </div>

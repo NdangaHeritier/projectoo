@@ -108,8 +108,11 @@ export default function ViewNote(){
                     <div className="auth inline-flex items-center gap-2 justify-center">
                         {/* actions buttons to pin or unpin note, open share model to copy and share link */}
                         <button
-                            onClick = {()=> PinningFunc("notes", note, !note.pinned, note.id)}
-                            className="rounded-full w-9 flex items-center justify-center h-9 p-2 bg-transparent hover:bg-gray-900 cursor-pointer"
+                            onClick = {()=> {
+                                PinningFunc("notes", note, !note.pinned, note.id);
+                                setNote(note => ({ ...note, pinned: !note.pinned })); // Update local state
+                            }}
+                            className="rounded-full w-9 flex items-center justify-center h-9 p-2 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer"
                         >
                             {note.pinned ? <UnpinIcon className="w-5 h-5 text-indigo-500" /> : <PinIcon />}
                         </button>
@@ -119,7 +122,7 @@ export default function ViewNote(){
                                 navigator.clipboard.writeText(`${window.location.origin}/notes/${note.id}`);
                                 toast.success("Note link copied to clipboard!");
                             }}
-                            className="rounded-full w-9 flex items-center justify-center h-9 p-2 bg-transparent hover:bg-gray-900 cursor-pointer"
+                            className="rounded-full w-9 flex items-center justify-center h-9 p-2 bg-transparent hover:bg-gray-200 dark:hover:bg-gray-900 cursor-pointer"
                         >
                             <ShareIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />  
                         </button>

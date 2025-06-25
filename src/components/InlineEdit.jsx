@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CheckIcon, PencilIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { LoadingSmall } from './LoadingSmall';
 
 export default function InlineEdit({
   value,
@@ -7,13 +8,19 @@ export default function InlineEdit({
   type = 'text',
   className = '',
   inputClassName = '',
-  showEditButton = true
+  showEditButton = true,
+  editing = false, // Controlled prop to manage edit state externally
+  showCancelButton = true, // Show cancel button
 }) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(editing);
   const [editValue, setEditValue] = useState(value);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSave = () => {
-    onSave(editValue);
+  const handleSave = async () => {
+    if (isLoading) return; // Prevent multiple saves
+    setIsLoading(true);
+    await onSave(editValue);
+    setIsLoading(false);
     setIsEditing(false);
   };
 
@@ -23,7 +30,7 @@ export default function InlineEdit({
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (type == 'input' && e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSave();
     } else if (e.key === 'Escape') {
@@ -70,16 +77,23 @@ export default function InlineEdit({
         <div className="flex ml-2 space-x-1">
           <button
             onClick={handleSave}
-            className="p-1 text-gray-400 hover:text-indigo-500 rounded-full hover:bg-indigo-50 dark:hover:bg-indigo-600/20"
+            className={`${!showCancelButton ? `bg-indigo-600 inline-flex items-center justify-center px-2 pr-3 gap-1 text-white hover:opacity-90`: `text-gray-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-600/20`} p-1 rounded-full`}
           >
-            <CheckIcon className="h-5 w-5" />
+            {isLoading ? (
+              <LoadingSmall className={`h-5 w-5`} />
+            ) : (
+              <CheckIcon className="h-5 w-5" />
+            )}
+            {isLoading ? 'saving...' : 'Save'}
           </button>
-          <button
-            onClick={handleCancel}
-            className="p-1 text-gray-400 hover:text-red-500 rounded-full hover:bg-red-50 dark:hover:bg-red-600/20"
-          >
-            <XMarkIcon className="h-5 w-5" />
-          </button>
+          {showCancelButton && (
+            <button
+              onClick={handleCancel}
+              className="p-1 text-gray-400 hover:text-red-500 rounded-full hover:bg-red-50 dark:hover:bg-red-600/20"
+            >
+              <XMarkIcon className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
     );
