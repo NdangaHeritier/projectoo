@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   return (
     <section className="main-bar flex items-start justify-start max-sm:flex-col">
-      <div className="menubar px-1 sm:border-r min-w-20 sm:min-h-screen max-sm:w-full py-3 sm:py-18 sticky top-10 max-sm:fixed max-sm:bottom-0 max-sm:top-7/8 max-sm:px-2 max-sm:left-0 max-sm:right-0 max-sm:dark:bg-black max-sm:shadow-lg bg-white max-sm:border-t border-gray-300 dark:border-gray-800 z-30">
+      <div className="menubar px-1 sm:border-r min-w-20 sm:min-h-screen max-sm:w-full py-3 sm:py-18 sticky top-10 max-sm:fixed max-sm:bottom-0 max-sm:top-7/8 max-sm:px-2 max-sm:left-0 max-sm:right-0 dark:bg-black max-sm:shadow-lg bg-white max-sm:border-t border-gray-300 dark:border-gray-800 z-30">
         <div className="links grid grid-cols-1 max-sm:grid-cols-4 gap-1 max-sm:w-full">
           {/* <button
             type='button'
