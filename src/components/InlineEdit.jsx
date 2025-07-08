@@ -84,7 +84,11 @@ export default function InlineEdit({
             ) : (
               <CheckIcon className="h-5 w-5" />
             )}
-            {isLoading ? 'saving...' : 'Save'}
+            {!showCancelButton ?
+            <span>
+              {isLoading ? 'saving...' : 'Save'}
+            </span>
+            : null}
           </button>
           {showCancelButton && (
             <button
