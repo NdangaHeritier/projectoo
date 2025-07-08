@@ -13,7 +13,7 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 export default async function handler(req, res) {
-  const { projectId, shareId } = req.query;
+  const { projectId } = req.query;
 
   try {
     // Only use projectId to fetch data
@@ -26,8 +26,7 @@ export default async function handler(req, res) {
     const project = projectDoc.data();
     const title = project.title || 'Shared Project';
     const description = project.description || 'A shared project plan';
-    const image = project.coverImage || 'https://yourdomain.com/default.jpg';
-
+    
     res.setHeader('Content-Type', 'text/html');
     res.send(`
       <!DOCTYPE html>
@@ -37,16 +36,16 @@ export default async function handler(req, res) {
         <title>${title}</title>
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
-        <meta property="og:image" content="${image}" />
+        <meta property="og:image" content="img.png" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://project-oo.vercel.app/shared/projects/${shareId}/share/${projectId}" />
+        <meta property="og:url" content="https://project-oo.vercel.app/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${projectId}" />
       </head>
       <body>
         <script>
-          window.location.href = "/shared/projects/${shareId}/share/${projectId}";
+          window.location.href = "/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${projectId}";
         </script>
         <noscript>
-          <meta http-equiv="refresh" content="0; URL=/shared/projects/${shareId}/share/${projectId}" />
+          <meta http-equiv="refresh" content="0; URL=/shared/projects/4Xt5oHur73b4dnxc6f4G4J7/share/${projectId}" />
         </noscript>
       </body>
       </html>
