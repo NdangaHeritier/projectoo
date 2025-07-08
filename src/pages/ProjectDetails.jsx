@@ -507,7 +507,11 @@ export default function ProjectDetails() {
   const selectedPhase = phaseOptions.find(option => option.value === selectedPhaseId);
   return (
     <div className="py-6 px-3 sm:px-5">
-      
+      {/* update meta tags first */}
+
+      <title>{project.title}</title>
+      <meta name="description" content={project.description} />
+
       {/* Quick links to share, pin, delete, and view progress reports */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
         <div className="flex items-center justify-between">

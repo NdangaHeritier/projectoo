@@ -85,6 +85,12 @@ export default function SharedProject() {
 
   return (
     <section className="flex justify-center items-center min-h-screen bg-transparent p-0">
+      {/* update meta tags first */}
+
+      <title>{project.title}</title>
+      <meta name="description" content={project.description} />
+
+      {/* contents */}
       <div className="p-16 max-sm:px-8 w-full bg-white/50 dark:bg-black/50">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">

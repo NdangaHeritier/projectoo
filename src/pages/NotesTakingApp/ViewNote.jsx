@@ -98,6 +98,45 @@ export default function ViewNote(){
     }
     return(
         <section className="viewNotes">
+            {/* update meta tags first */}
+            <title>
+                {
+                    // Extract first line, remove markdown styling
+                    note && note.content
+                        ? note.content
+                            .split('\n')[0] // get first line
+                            .replace(/^#+\s*/, '') // remove heading markdown
+                            .replace(/[*_~`>#-]/g, '') // remove common markdown symbols
+                            .trim()
+                        : "Note"
+                }
+            </title>
+            <meta
+                name="description"
+                content={
+                    note && note.content
+                    ? note.content
+                        // Remove custom italic styling: //..//
+                        .replace(/\/\/(.*?)\/\//g, '$1')
+                        // Replace markdown links [text](url) with just url
+                        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$2')
+                        // Replace "- item" at line start with "item,"
+                        .replace(/^- (.*)$/gm, '$1,')
+                        // Remove other markdown symbols
+                        .replace(/[*_~`>#-]/g, '')
+                        // Replace newlines with space
+                        .replace(/\n/g, ' ')
+                        // Remove extra commas before periods
+                        .replace(/,\s*\./g, '.')
+                        // Collapse multiple spaces
+                        .replace(/\s{2,}/g, ' ')
+                        // Remove trailing commas
+                        .replace(/,\s*$/, '')
+                        .trim()
+                    : "Note"
+                }
+                />
+            {/* content */}
             <div className="view-head p-5 max-sm:px-2 flex items-center justify-between">
                 <Link to={`/`} className="rounded-md inline-flex items-center justify-center gap-1 px-3 py-1 font-semibold text-indigo-600 dark:text-indigo-500 hover:underline hover:bg-gray-500/10">
                     <ChevronLeftIcon className="w-4 h-4 text-inherit" />
