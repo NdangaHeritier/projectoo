@@ -12,7 +12,6 @@ import Footer from '../components/Footer';
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
-      <HomeNavbar />
       <HeroSection />
       <FeaturesSection />
       <HowItWorksSection />
